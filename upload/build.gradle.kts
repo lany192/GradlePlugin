@@ -14,7 +14,7 @@ gradlePlugin {
     plugins {
         create("upload") {
             id = "com.github.lany192.upload"
-            implementationClass = "com.github.lany192.UploadPlugin"
+            implementationClass = "com.github.lany192.upload.UploadPlugin"
         }
     }
 }

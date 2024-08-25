@@ -1,4 +1,4 @@
-package com.github.lany192
+package com.github.lany192.upload
 
 open class PluginExtension {
     var name: String = ""

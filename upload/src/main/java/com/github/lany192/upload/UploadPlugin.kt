@@ -1,4 +1,4 @@
-package com.github.lany192
+package com.github.lany192.upload
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

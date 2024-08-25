@@ -1,4 +1,4 @@
-package com.github.lany192
+package com.github.lany192.upload
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
