@@ -31,6 +31,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "UploadGradlePlugin"
+rootProject.name = "gradle-plugin"
 include(":app")
 include(":upload")
