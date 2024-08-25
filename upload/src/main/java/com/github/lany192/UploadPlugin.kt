@@ -9,11 +9,12 @@ class UploadPlugin : Plugin<Project> {
         println("这是插件：$this::class.java.name")
         val extension = project.extensions.create("upload", PluginExtension::class.java)
 
-        project.tasks.create("UploadPluginTask")
-            .doLast {
+        project.tasks.create("UploadPluginTask"){
+            group = "upload"
+            doLast {
                 println("这是插件 $this::class.java.name，它创建了一个 Task：${extension.name}")
                 println("chapter = ${extension.chapter}")
-//                println("author = ${extension.subExtension.author}")
             }
+        }
     }
 }
