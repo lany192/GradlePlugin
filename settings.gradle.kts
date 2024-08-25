@@ -1,5 +1,9 @@
 pluginManagement {
     repositories {
+        mavenLocal()
+        maven {
+            url = uri("$rootDir/local-repo")
+        }
         maven { setUrl("https://mirrors.tencent.com/nexus/repository/maven-public/") }
         maven { setUrl("https://jitpack.io") }
         google {
@@ -16,6 +20,10 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
+        maven {
+            url = uri("$rootDir/local-repo")
+        }
         maven { setUrl("https://mirrors.tencent.com/nexus/repository/maven-public/") }
         maven { setUrl("https://jitpack.io") }
         google()

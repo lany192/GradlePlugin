@@ -1,7 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+//    alias(libs.plugins.upload.plugin)
 }
+
+//upload {
+//    name = "测试插件"
+//    chapter = "1.0.0"
+//}
 
 android {
     namespace = "com.github.lany192.plugin.upload"
