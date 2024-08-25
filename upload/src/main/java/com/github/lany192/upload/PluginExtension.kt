@@ -1,6 +1,7 @@
 package com.github.lany192.upload
 
 open class PluginExtension {
-    var name: String = ""
-    var chapter: String = ""
+    var server_url: String = ""
+    var file_path: String = ""
+    var parameters: List<String> = emptyList()
 }

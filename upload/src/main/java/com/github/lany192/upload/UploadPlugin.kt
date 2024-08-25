@@ -12,8 +12,9 @@ class UploadPlugin : Plugin<Project> {
         project.tasks.create("UploadPluginTask"){
             group = "upload"
             doLast {
-                println("这是插件 $this::class.java.name，它创建了一个 Task：${extension.name}")
-                println("chapter = ${extension.chapter}")
+                println("这是插件 $this::class.java.name，它创建了一个 Task：${extension.server_url}")
+                println("chapter = ${extension.file_path}")
+                println("接收的参数parameters: ${extension.parameters.joinToString()}")
             }
         }
     }

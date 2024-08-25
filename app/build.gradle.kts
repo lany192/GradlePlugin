@@ -1,13 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-//    alias(libs.plugins.upload.plugin)
+    alias(libs.plugins.upload.plugin)
 }
 
-//upload {
-//    name = "测试插件"
-//    chapter = "1.0.0"
-//}
+upload {
+    server_url = "http://127.0.0.1:8000/upload"
+    file_path = "1.0.0"
+    parameters = listOf("param1", "param2", "param3")
+}
 
 android {
     namespace = "com.github.lany192.plugin.upload"
