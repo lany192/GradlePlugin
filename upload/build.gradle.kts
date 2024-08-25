@@ -8,6 +8,7 @@ version = "1.0.0"
 
 dependencies {
     implementation(libs.build.gradle)
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 }
 
 gradlePlugin {
