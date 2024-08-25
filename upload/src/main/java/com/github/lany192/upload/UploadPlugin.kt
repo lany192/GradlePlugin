@@ -22,33 +22,38 @@ class UploadPlugin : Plugin<Project> {
             doLast {
                 log.lifecycle("服务器地址：${extension.server_url}")
                 log.lifecycle("待上传文件： ${extension.file_path}")
-                log.lifecycle("接收的参数: ${extension.parameters.joinToString()}")
 
+                extension.parameters.let { config ->
+                    println("Processing configuration:")
+                    for ((key, value) in config) {
+                        log.lifecycle("接收的参数: $key: $value")
+                    }
+                }
                 if (extension.file_path == null || extension.server_url == null) {
                     throw IllegalArgumentException("File path and server URL must be provided.")
                 }
-                uploadFile(extension.file_path, extension.server_url)
+                uploadFile(extension.file_path, extension.server_url, extension.parameters)
             }
         }
     }
 
-    private fun uploadFile(filePath: String, serverUrl: String) {
+    private fun uploadFile(filePath: String, serverUrl: String, parameters: Map<String, String>) {
         val file = File(filePath)
         if (!file.exists()) {
             throw IllegalArgumentException("File does not exist: $filePath")
         }
         try {
+            val multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            parameters.map { (key, value) ->
+                multipartBody.addFormDataPart(key, value)
+            }
+            multipartBody.addFormDataPart(
+                "file", file.name,
+                file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            )
             val request = Request.Builder()
                 .url(serverUrl)
-                .post(
-                    MultipartBody.Builder()
-                        .setType(MultipartBody.FORM)
-                        .addFormDataPart(
-                            "file", file.name,
-                            file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-                        )
-                        .build()
-                )
+                .post(multipartBody.build())
                 .build()
             val client = OkHttpClient()
             client.newCall(request).execute().use { response ->
