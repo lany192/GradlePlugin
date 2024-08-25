@@ -15,10 +15,13 @@ class UploadPlugin : Plugin<Project> {
     private lateinit var log: Logger
     override fun apply(project: Project) {
         log = project.logger
-        log.lifecycle("Hello from plugin 'com.github.lany192.upload'")
+        log.lifecycle("构建插件'com.github.lany192.upload'")
         val extension = project.extensions.create("upload", PluginExtension::class.java)
         project.tasks.create("upload_file_to_server") {
             group = "upload"
+            if (extension.task_depends.isNotEmpty()) {
+                dependsOn(extension.task_depends)
+            }
             doLast {
                 log.lifecycle("服务器地址：${extension.server_url}")
                 log.lifecycle("待上传文件： ${extension.file_path}")
