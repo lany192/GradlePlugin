@@ -8,14 +8,14 @@ version = "1.0.0"
 
 dependencies {
     implementation(libs.build.gradle)
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation(libs.okhttp)
 }
 
 gradlePlugin {
     plugins {
         create("upload") {
-            id = "com.github.lany192.upload"
-            implementationClass = "com.github.lany192.upload.UploadPlugin"
+            id = "com.github.lany192.plugin.upload"
+            implementationClass = "com.github.lany192.UploadPlugin"
         }
     }
 }

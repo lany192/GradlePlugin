@@ -1,6 +1,6 @@
-package com.github.lany192.upload
+package com.github.lany192
 
-open class PluginExtension {
+open class UploadPluginExtension {
     var task_depends: String = "assemble"
     var server_url: String = ""
     var file_path: String = ""

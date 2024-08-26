@@ -1,4 +1,4 @@
-package com.github.lany192.upload
+package com.github.lany192
 
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -15,8 +15,9 @@ class UploadPlugin : Plugin<Project> {
     private lateinit var log: Logger
     override fun apply(project: Project) {
         log = project.logger
+        val extension = project.extensions.create("upload", UploadPluginExtension::class.java)
         log.lifecycle("构建插件'com.github.lany192.upload'")
-        val extension = project.extensions.create("upload", PluginExtension::class.java)
+        log.lifecycle("构建插件服务器地址:${extension.server_url}")
         project.tasks.create("upload_file_to_server") {
             group = "upload"
             if (extension.task_depends.isNotEmpty()) {
