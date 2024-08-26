@@ -12,7 +12,7 @@ upload {
         "$rootDir/app/build/outputs/apk/debug/app-debug.apk",
         "$rootDir/app/build/outputs/apk/release/app-release-unsigned.apk"
     )
-    file_param_name = "file"
+    file_param_name = "files"
     parameters = mapOf(
         "param1" to "John Doe",
         "param2" to "John Doe2",
