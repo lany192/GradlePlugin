@@ -15,46 +15,82 @@ class UploadPlugin : Plugin<Project> {
     private lateinit var log: Logger
     override fun apply(project: Project) {
         log = project.logger
+        log.lifecycle("开始构建上传插件")
         val extension = project.extensions.create("upload", UploadPluginExtension::class.java)
-        log.lifecycle("构建插件'com.github.lany192.upload'")
-        log.lifecycle("构建插件服务器地址:${extension.server_url}")
-        project.tasks.create("upload_file_to_server") {
-            group = "upload"
-            if (extension.task_depends.isNotEmpty()) {
-                dependsOn(extension.task_depends)
-            }
-            doLast {
-                log.lifecycle("服务器地址：${extension.server_url}")
-                log.lifecycle("待上传文件： ${extension.file_path}")
 
-                extension.parameters.let { config ->
-                    println("Processing configuration:")
-                    for ((key, value) in config) {
-                        log.lifecycle("接收的参数: $key: $value")
+        project.afterEvaluate {
+            log.lifecycle("任务名称:${extension.task_name}")
+            log.lifecycle("服务器地址：${extension.server_url}")
+            extension.file_paths.forEach {
+                log.lifecycle("待上传文件路径： ${it}")
+            }
+            extension.parameters.let { config ->
+                println("Processing configuration:")
+                for ((key, value) in config) {
+                    log.lifecycle("接收的参数: $key: $value")
+                }
+            }
+            if (extension.file_paths.isEmpty()) {
+                throw IllegalArgumentException("至少需要配置一个文件路径")
+            }
+            if (extension.server_url.isEmpty()) {
+                throw IllegalArgumentException("服务器上传接口url地址不能为空")
+            }
+            if (extension.task_depends.isNotEmpty()) {
+                project.tasks.create(extension.task_name) {
+                    group = "upload"
+                    dependsOn(extension.task_depends)
+                    doLast {
+                        uploadFile(
+                            extension.server_url,
+                            extension.file_paths,
+                            extension.parameters,
+                            extension.file_param_name
+                        )
                     }
                 }
-                if (extension.file_path == null || extension.server_url == null) {
-                    throw IllegalArgumentException("File path and server URL must be provided.")
+            } else {
+                project.tasks.create(extension.task_name) {
+                    group = "upload"
+                    doLast {
+                        uploadFile(
+                            extension.server_url,
+                            extension.file_paths,
+                            extension.parameters,
+                            extension.file_param_name
+                        )
+                    }
                 }
-                uploadFile(extension.file_path, extension.server_url, extension.parameters)
             }
         }
     }
 
-    private fun uploadFile(filePath: String, serverUrl: String, parameters: Map<String, String>) {
-        val file = File(filePath)
-        if (!file.exists()) {
-            throw IllegalArgumentException("File does not exist: $filePath")
+    private fun uploadFile(
+        serverUrl: String,
+        paths: List<String>,
+        parameters: Map<String, String>,
+        fileKey: String = "file"
+    ) {
+        paths.forEach {
+            val file = File(it)
+            if (!file.exists()) {
+                throw IllegalArgumentException("文件不存在，请检查： $it")
+                return@uploadFile
+            }
         }
+        log.lifecycle("开始上传文件")
         try {
             val multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             parameters.map { (key, value) ->
                 multipartBody.addFormDataPart(key, value)
             }
-            multipartBody.addFormDataPart(
-                "file", file.name,
-                file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
-            )
+            paths.forEach {
+                val file = File(it)
+                multipartBody.addFormDataPart(
+                    fileKey, file.name,
+                    file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                )
+            }
             val request = Request.Builder()
                 .url(serverUrl)
                 .post(multipartBody.build())
