@@ -2,7 +2,7 @@ pluginManagement {
     repositories {
         mavenLocal()
         maven {
-            url = uri("$rootDir/local-repo")
+            url = uri("$rootDir/repository")
         }
         maven { setUrl("https://mirrors.tencent.com/nexus/repository/maven-public/") }
         maven { setUrl("https://jitpack.io") }
@@ -22,7 +22,7 @@ dependencyResolutionManagement {
     repositories {
         mavenLocal()
         maven {
-            url = uri("$rootDir/local-repo")
+            url = uri("$rootDir/repository")
         }
         maven { setUrl("https://mirrors.tencent.com/nexus/repository/maven-public/") }
         maven { setUrl("https://jitpack.io") }

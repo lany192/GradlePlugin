@@ -29,7 +29,7 @@ publishing {
     }
     repositories {
         maven {
-            url = uri("$rootDir/local-repo")
+            url = uri("$rootDir/repository")
         }
         mavenLocal()
     }
