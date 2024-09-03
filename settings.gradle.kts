@@ -33,4 +33,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "gradle-plugin"
 include(":app")
-include(":upload")
+include(":upload-gradle-plugin")
+//includeBuild("upload-gradle-plugin")
