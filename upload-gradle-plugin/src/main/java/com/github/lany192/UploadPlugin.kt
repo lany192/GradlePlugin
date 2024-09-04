@@ -75,7 +75,6 @@ class UploadPlugin : Plugin<Project> {
             val file = File(it)
             if (!file.exists()) {
                 throw IllegalArgumentException("文件不存在，请检查： $it")
-                return@uploadFile
             }
         }
         log.lifecycle("开始上传文件")
