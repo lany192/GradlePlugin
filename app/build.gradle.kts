@@ -1,23 +1,23 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.upload.plugin)
-}
-
-upload {
-    task_name = "upload_file_to_server2"
-    task_depends = "assemble"
-    server_url = "http://127.0.0.1:8000/upload"
-    file_paths = listOf(
-        "$rootDir/app/build/outputs/apk/debug/app-debug.apk",
-        "$rootDir/app/build/outputs/apk/release/app-release-unsigned.apk"
-    )
-    file_param_name = "files"
-    parameters = mapOf(
-        "param1" to "John Doe",
-        "param2" to "John Doe2",
-        "param3" to "New York"
-    )
+//    alias(libs.plugins.upload.plugin)
+//}
+//
+//upload {
+//    task_name = "upload_file_to_server2"
+//    task_depends = "assemble"
+//    server_url = "http://127.0.0.1:8000/upload"
+//    file_paths = listOf(
+//        "$rootDir/app/build/outputs/apk/debug/app-debug.apk",
+//        "$rootDir/app/build/outputs/apk/release/app-release-unsigned.apk"
+//    )
+//    file_param_name = "files"
+//    parameters = mapOf(
+//        "param1" to "John Doe",
+//        "param2" to "John Doe2",
+//        "param3" to "New York"
+//    )
 }
 
 android {
